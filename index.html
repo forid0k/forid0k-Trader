@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Signals</title>
+</head>
+<body style="background:#111;color:#0f0;font-family:monospace">
+  <h2>📡 Live Signals</h2>
+  <div id="signals"></div>
+
+  <script>
+    async function fetchSignals() {
+      const res = await fetch('http://localhost:5000/get-signals');
+      const signals = await res.json();
+      document.getElementById('signals').innerHTML = signals.map(sig =>
+        `<div>🟢 ${sig.asset} - ${sig.signal} - ${sig.time} (${sig.strategy})</div>`
+      ).join('');
+    }
+
+    setInterval(fetchSignals, 2000); // প্রতি ২ সেকেন্ডে আপডেট
+  </script>
+</body>
+</html>
